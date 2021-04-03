@@ -1,0 +1,34 @@
+.white{
+    color: white;
+}
+
+
+.mgLt{
+    margin-left: 20%;
+    margin-top: 0.9% !important;
+}
+
+.me-md-auto {
+    margin-right: auto !important;
+}
+
+.bg-button {
+    background-color: #18c78a !important;
+}
+
+.btn{
+    margin-right: 5px;
+}
+
+.btn-outline-primary {
+    color: #fff;
+    background-color: #18c78a;
+    border-color: #18c78a;   
+}
+
+.btn-outline-primary:hover {
+    color: #18c78a;
+    border-color: #18c78a;
+    background-color: transparent;
+}
+
