@@ -1,18 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
-import { getList } from './TodoAction'
+function TodoList(props) {
 
-
-
-class TodoList extends Component {
-
-    renderRows() {
-        const list = this.props.todo || []
+    const renderRows = () => {
+        const list = props.list || []
 
         return list.map(todo => (
             <tr key={todo._id}>
@@ -20,7 +15,7 @@ class TodoList extends Component {
                     {todo.description}
                 </th>
                 <th>
-                    {todo.data}
+                    {todo.createdAt.substring(0, 10)}
                 </th>
                 <th>
                     <button className="btn btn-success" hidden={todo.done}>
@@ -37,32 +32,27 @@ class TodoList extends Component {
         ))
     }
 
+    return (
+        <div className="table-responsive">
+            <table className="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Data</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {renderRows()}
+                </tbody>
 
-    render() {
-
-
-        return (
-            <div className="table-responsive">
-                <table className="table table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <th>Descrição</th>
-                            <th>Data</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderRows()}
-                    </tbody>
-
-                </table>
-            </div>
-        )
-    }
+            </table>
+        </div>
+    )
 }
 
-const mapStateToProps = state => ({ todo: state.todo.list })
-const mapDispatchToProps = dispacth => bindActionCreators({ getList }, dispacth)
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
+const mapStateToProps = state => ({ list: state.todo.list })
+
+export default connect(mapStateToProps)(TodoList)
 
