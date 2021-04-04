@@ -1,5 +1,5 @@
 import React from 'react'
-import PagerHeader from '../templates/PagerHeader'
+import PagerHeader from '../components/templates/PagerHeader'
 
 export default function About(props) {
     return (
