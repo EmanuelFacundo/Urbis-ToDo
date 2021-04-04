@@ -7,4 +7,9 @@ const todoUrbis = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now}
 })
 
-module.exports = restful.model('Todo', todoUrbis)
+const todoList = new mongoose.Schema({
+    title: { type: String, required: true },
+    todo: [todoUrbis]
+})
+
+module.exports = restful.model('TodoList', todoList)
