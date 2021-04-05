@@ -28,22 +28,28 @@ class TodoForm extends Component {
                         value={this.props.description} />
                 </Grid>
                 <Grid cols='12 3 2'>
-                    <button className="btn btn-primary" onClick={search}>
-                        <FontAwesomeIcon icon={faSearch} />
-                    </button>
-                    <button className="btn btn-outline-danger" onClick={clear}>
-                        <FontAwesomeIcon icon={faSearchMinus} />
-                    </button>
-                    <button className="btn btn-success" onClick={() => add(description)}>
-                        <FontAwesomeIcon icon={faPlus} />
-                    </button>
+                        <button className="btn btn-primary" 
+                            onClick={search} 
+                            hidden={!(this.props.list.length > 0)}>
+                            <FontAwesomeIcon icon={faSearch} />
+                        </button>
+                        <button className="btn btn-outline-danger"
+                            onClick={clear} 
+                            hidden={!(this.props.list.length > 0)}>
+                            <FontAwesomeIcon icon={faSearchMinus} />
+                        </button>
+                        <button className="btn btn-success" 
+                            onClick={() => add(description)}
+                            hidden={!(this.props.list.length == 0)}>
+                            <FontAwesomeIcon icon={faPlus} />
+                        </button>
                 </Grid>
             </div>
         )
     }
 }
 
-const mapStateToProps = state => ({ description: state.todo.description })
+const mapStateToProps = state => ({ description: state.todo.description, list: state.todo.list })
 const mapDispatchToProps = dispatch => bindActionCreators({ changeToDoDescription, search, add, clear }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoForm)
