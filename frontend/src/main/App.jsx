@@ -5,6 +5,7 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import React from 'react'
 import Menu from '../components/menu/Menu'
 import Routes from './Routes'
+import Notification from '../components/notification/Notification'
 
 export default function App(props) {
     
@@ -13,6 +14,7 @@ export default function App(props) {
         <div className="app">
 
             <Menu />
+            <Notification />
             <Routes />
         </div>
     )

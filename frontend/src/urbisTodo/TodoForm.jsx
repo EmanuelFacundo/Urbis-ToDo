@@ -23,7 +23,7 @@ class TodoForm extends Component {
             <div role='form' className=" todoForm nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 white">
                 <Grid cols='12 9 10'>
                     <input type="text" id='description' className="form-control"
-                        placeholder="Adicione uma tarefa"
+                        placeholder="Adicione ou pesquise por uma tarefa."
                         onChange={this.props.changeToDoDescription}
                         value={this.props.description} />
                 </Grid>
@@ -34,13 +34,11 @@ class TodoForm extends Component {
                             <FontAwesomeIcon icon={faSearch} />
                         </button>
                         <button className="btn btn-outline-danger"
-                            onClick={clear} 
-                            hidden={!(this.props.list.length > 0)}>
+                            onClick={clear}>
                             <FontAwesomeIcon icon={faSearchMinus} />
                         </button>
                         <button className="btn btn-success" 
-                            onClick={() => add(description)}
-                            hidden={!(this.props.list.length == 0)}>
+                            onClick={() => add(description)}>
                             <FontAwesomeIcon icon={faPlus} />
                         </button>
                 </Grid>

@@ -33,6 +33,22 @@ export function add(description) {
     }
 }
 
+export function markAsDone(todo){
+    return dispatch => {
+        Axios.put(`${BASE_URL}/${todo._id}`, { ...todo, done: true })
+            .then(resp => dispatch(search()))
+            .then(resp => toastr.success('Sucesso', `Tarefa ${todo.description} concluida.`))
+    }
+}
+
+export function markAsPeding(todo){
+    return dispatch => {
+        Axios.put(`${BASE_URL}/${todo._id}`, { ...todo, done: false })
+            .then(resp => dispatch(search()))
+            .then(resp => toastr.info('Sucesso', `Tarefa ${todo.description} restaurada.`))
+    }
+}
+
 export function clear() {
     return [
         { type: consts.TODO_CLEAR },
