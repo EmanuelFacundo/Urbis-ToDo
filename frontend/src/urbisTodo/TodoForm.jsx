@@ -11,8 +11,26 @@ import Grid from '../components/templates/Grid'
 
 class TodoForm extends Component {
 
+    constructor(props){
+        super(props)
+
+        this.keyHandler = this.keyHandler.bind(this)
+    }
+
     componentDidMount() {
         this.props.search()
+    }
+
+    keyHandler(event) {
+
+        const { add, search, description, clear } = this.props
+
+        if(event.key === 'Enter') {
+            event.shiftKey ? add(description) : search()
+        } else if(event.key === 'Escape') {
+            clear() 
+        }
+
     }
 
     render() {
@@ -25,7 +43,8 @@ class TodoForm extends Component {
                     <input type="text" id='description' className="form-control"
                         placeholder="Adicione ou pesquise por uma tarefa."
                         onChange={this.props.changeToDoDescription}
-                        value={this.props.description} />
+                        value={this.props.description}
+                        onKeyUp={this.keyHandler} />
                 </Grid>
                 <Grid cols='12 3 2'>
                     <button className="btn btn-primary"

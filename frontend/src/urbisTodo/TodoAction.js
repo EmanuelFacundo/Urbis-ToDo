@@ -69,7 +69,7 @@ export function edit(todo, description){
             .then(resp => {
                 dispatch(search())
                 dispatch(clear())
-                toastr.success('Sucesso', `Tarefa ${desA} atualizada para ${todo.description}`)
+                toastr.success('Sucesso', `Tarefa ${desA} atualizada para ${description}`)
             })
     }
 
