@@ -27,26 +27,49 @@ export function changeToDoDescription(event) {
 export function add(description) {
     return dispatch => {
         Axios.post(BASE_URL, { description })
-            .then(resp => dispatch(clear()))
-            .then(resp => dispatch(search()))
-            .then(resp => toastr.success('Sucesso', 'Tarefa Adicionada com sucesso!'))
+            .then(resp =>{
+                dispatch(clear())
+                dispatch(search())
+                toastr.success('Sucesso', 'Tarefa Adicionada com sucesso!')
+                }
+            )
+            .catch(e => {
+                e.response.data.errors.forEach(error => toastr.error('Error', error))
+            })
     }
 }
 
 export function markAsDone(todo){
     return dispatch => {
         Axios.put(`${BASE_URL}/${todo._id}`, { ...todo, done: true })
-            .then(resp => dispatch(search()))
-            .then(resp => toastr.success('Sucesso', `Tarefa ${todo.description} concluida.`))
+            .then(resp => {
+                dispatch(search())
+                toastr.success('Sucesso', `Tarefa ${todo.description} concluida.`)
+                }
+            )
     }
 }
 
 export function markAsPeding(todo){
     return dispatch => {
         Axios.put(`${BASE_URL}/${todo._id}`, { ...todo, done: false })
-            .then(resp => dispatch(search()))
-            .then(resp => toastr.info('Sucesso', `Tarefa ${todo.description} restaurada.`))
+            .then(resp => {
+                dispatch(search())
+                toastr.info('Sucesso', `Tarefa ${todo.description} restaurada.`)
+                }
+            )
     }
+}
+
+export function remove(todo){
+    return dispatch => {
+        Axios.delete(`${BASE_URL}/${todo._id}`)
+            .then(resp => {
+                toastr.warning('Sucesso', `Tarefa ${todo.description} excluida.`)
+                dispatch(search())      
+                } 
+            )
+        }
 }
 
 export function clear() {

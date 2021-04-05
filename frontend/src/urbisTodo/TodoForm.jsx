@@ -11,7 +11,7 @@ import Grid from '../components/templates/Grid'
 
 class TodoForm extends Component {
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.search()
     }
 
@@ -28,19 +28,18 @@ class TodoForm extends Component {
                         value={this.props.description} />
                 </Grid>
                 <Grid cols='12 3 2'>
-                        <button className="btn btn-primary" 
-                            onClick={search} 
-                            hidden={!(this.props.list.length > 0)}>
-                            <FontAwesomeIcon icon={faSearch} />
-                        </button>
-                        <button className="btn btn-outline-danger"
-                            onClick={clear}>
-                            <FontAwesomeIcon icon={faSearchMinus} />
-                        </button>
-                        <button className="btn btn-success" 
-                            onClick={() => add(description)}>
-                            <FontAwesomeIcon icon={faPlus} />
-                        </button>
+                    <button className="btn btn-primary"
+                        onClick={search}>
+                        <FontAwesomeIcon icon={faSearch} />
+                    </button>
+                    <button className="btn btn-outline-danger"
+                        onClick={clear}>
+                        <FontAwesomeIcon icon={faSearchMinus} />
+                    </button>
+                    <button className="btn btn-success"
+                        onClick={() => add(description)}>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </button>
                 </Grid>
             </div>
         )
