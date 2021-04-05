@@ -61,6 +61,20 @@ export function markAsPeding(todo){
     }
 }
 
+export function edit(todo, description){
+    const desA = todo.description
+
+    return dispatch => {
+        Axios.put(`${BASE_URL}/${todo._id}`, { ...todo, description: description})
+            .then(resp => {
+                dispatch(search())
+                dispatch(clear())
+                toastr.success('Sucesso', `Tarefa ${desA} atualizada para ${todo.description}`)
+            })
+    }
+
+}
+
 export function remove(todo){
     return dispatch => {
         Axios.delete(`${BASE_URL}/${todo._id}`)

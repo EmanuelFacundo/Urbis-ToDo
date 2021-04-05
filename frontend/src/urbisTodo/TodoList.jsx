@@ -5,14 +5,14 @@ import { bindActionCreators } from 'redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faPencilAlt, faTrashAlt, faUndoAlt } from '@fortawesome/free-solid-svg-icons'
 
-import { markAsDone, markAsPeding, remove } from './TodoAction'
+import { markAsDone, markAsPeding, remove, edit } from './TodoAction'
 
 function TodoList(props) {
 
     const renderRows = () => {
         const list = props.list || []
 
-        const { markAsDone, markAsPeding, remove } = props
+        const { markAsDone, markAsPeding, remove, edit } = props
 
         return list.map(todo => (
             <tr key={todo._id} className={ todo.done ? 'markAsDone':''}>
@@ -28,7 +28,9 @@ function TodoList(props) {
                         onClick={() => markAsDone(todo)}>
                         <FontAwesomeIcon icon={faCheck} />
                     </button>
-                    <button className="btn btn-warning" hidden={todo.done}>
+                    <button className="btn btn-warning" 
+                        hidden={todo.done}
+                        onClick={() => edit(todo, props.description)}>
                         <FontAwesomeIcon icon={faPencilAlt} />
                     </button>
                     <button className="btn btn-danger" 
@@ -66,8 +68,8 @@ function TodoList(props) {
 }
 
 
-const mapStateToProps = state => ({ list: state.todo.list })
-const mapDispatchToProps = dispatch => bindActionCreators({ markAsDone, markAsPeding, remove }, dispatch)
+const mapStateToProps = state => ({ list: state.todo.list, description: state.todo.description })
+const mapDispatchToProps = dispatch => bindActionCreators({ markAsDone, markAsPeding, remove, edit }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
 
