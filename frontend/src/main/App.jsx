@@ -8,6 +8,8 @@ import Routes from './Routes'
 import Notification from '../components/notification/Notification'
 import dotenv from 'dotenv'
 
+import Auth from '../auth/Auth'
+
 export default function App(props) {
     dotenv.config()
     
@@ -18,7 +20,8 @@ export default function App(props) {
 
             <Menu />
             <Notification />
-            <Routes />
+            <Auth />
+            {/* <Routes /> */}
         </div>
     )
 }

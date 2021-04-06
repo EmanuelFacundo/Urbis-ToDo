@@ -12,7 +12,7 @@ import App from './main/App';
 import reportWebVitals from './reportWebVitals';
 import reducers from './main/reducers'
 
-const store = applyMiddleware(thunk, multi, promise)(createStore)(reducers)
+const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers)
 
 
 ReactDOM.render(

@@ -5,7 +5,7 @@ const INITIAL_STATE = {
     list: [ ]   
 }
 
-export default (state = INITIAL_STATE, action) => {
+export default function TodoReducer(state = INITIAL_STATE, action){
     switch(action.type){
         case consts.TODO_DESCRIPTION_CHANGED:
             return {...state, description: action.payload}
