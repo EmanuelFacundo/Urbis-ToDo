@@ -12,5 +12,6 @@ dotenv.config()
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise //retirar mensagens de advertencia
 mongoose.set('useUnifiedTopology', true) //Usando o novo mecanismo de topologia
+mongoose.set('useFindAndModify', false) //Optando por não usar o useFindAndModify pra retirar warnings
 module.exports = mongoose.connect(process.env.MONGODB, { useNewUrlParser: true }) 
 //Uma vez que o Mongoose foi conectado com sucesso, o analisador de URL não é mais importante.

@@ -44,7 +44,7 @@ export function markAsDone(todo){
         Axios.put(`${BASE_URL}/${todo._id}`, { ...todo, done: true })
             .then(resp => {
                 dispatch(search())
-                toastr.success('Sucesso', `Tarefa ${todo.description} concluida.`)
+                toastr.success('Sucesso', `Tarefa (${todo.description}) foi concluida.`)
                 }
             )
     }
@@ -55,7 +55,7 @@ export function markAsPeding(todo){
         Axios.put(`${BASE_URL}/${todo._id}`, { ...todo, done: false })
             .then(resp => {
                 dispatch(search())
-                toastr.info('Sucesso', `Tarefa ${todo.description} restaurada.`)
+                toastr.info('Sucesso', `Tarefa (${todo.description}) foi restaurada.`)
                 }
             )
     }
@@ -69,7 +69,7 @@ export function edit(todo, description){
             .then(resp => {
                 dispatch(search())
                 dispatch(clear())
-                toastr.success('Sucesso', `Tarefa ${desA} atualizada para ${description}`)
+                toastr.success('Sucesso', `Tarefa (${desA}) foi atualizada para (${description})`)
             })
     }
 
@@ -79,7 +79,7 @@ export function remove(todo){
     return dispatch => {
         Axios.delete(`${BASE_URL}/${todo._id}`)
             .then(resp => {
-                toastr.warning('Sucesso', `Tarefa ${todo.description} excluida.`)
+                toastr.warning('Sucesso', `Tarefa (${todo.description}) excluida.`)
                 dispatch(search())      
                 } 
             )

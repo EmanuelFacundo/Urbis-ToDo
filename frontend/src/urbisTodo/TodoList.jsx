@@ -16,7 +16,7 @@ function TodoList(props) {
 
         return list.map(todo => (
             <tr key={todo._id} className={ todo.done ? 'markAsDone':''}>
-                <th >
+                <th className="maxW">
                     {todo.description}
                 </th>
                 <th>
@@ -55,7 +55,7 @@ function TodoList(props) {
                     <tr>
                         <th>Descrição</th>
                         <th>Data</th>
-                        <th>Ações</th>
+                        <th className="tableActions">Ações</th>
                     </tr>
                 </thead>
                 <tbody>

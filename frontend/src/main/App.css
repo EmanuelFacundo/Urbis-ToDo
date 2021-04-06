@@ -8,6 +8,14 @@
 
 }
 
+.maxW{
+    max-width: 10rem;
+}
+
+.tableActions {
+    width: 105px;
+}
+
 .markAsDone{
     background-color: rgba(220, 20, 60, 0.493) !important;
 }

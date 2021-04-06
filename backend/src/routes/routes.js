@@ -8,14 +8,29 @@ Autor: Emanuel Facundo
 */
 
 const express = require('express')
+const auth = require('../config/auth')
 
-module.exports = function(server) {
+module.exports = function (server) {
 
-    //API Routes
-    const router = express.Router()
-    server.use('/api', router) //midway
+    /*
+    * Rotas protegidas por Token JWT
+    */
+    const protectedApi = express.Router()
+    server.use('/api', protectedApi) //midway
 
-    //TODO Routes
-    const urbisTodoService = require('../api/urbisTodoService')
-    urbisTodoService.register(router, '/urbisTodos')
+    protectedApi.use(auth)
+
+    const urbisTodoService = require('../api/urbisTodo/urbisTodoService')
+    urbisTodoService.register(protectedApi, '/urbisTodos')
+
+    /*
+    * Rotas Abertas
+    */
+    const openApi = express.Router()
+    server.use('/oapi', openApi)
+
+    const AuthService = require('../api/user/authService')
+    openApi.use('/login', AuthService.login)
+    openApi.use('/signup', AuthService.signup)
+    openApi.use('/validationToken', AuthService.validateToken)
 }

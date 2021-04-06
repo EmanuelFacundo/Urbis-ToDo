@@ -41,7 +41,7 @@ class TodoForm extends Component {
             <div role='form' className=" todoForm nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 white">
                 <Grid cols='12 9 10'>
                     <input type="text" id='description' className="form-control"
-                        placeholder="Adicione ou pesquise por uma tarefa."
+                        placeholder="Adicione uma tarefa."
                         onChange={this.props.changeToDoDescription}
                         value={this.props.description}
                         onKeyUp={this.keyHandler} />
