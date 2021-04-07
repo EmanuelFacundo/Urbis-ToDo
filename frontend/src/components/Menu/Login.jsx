@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import userIcon from '../../imagens/user.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
+import If from '../operator/If'
 
 function Login(props) {
 
@@ -10,11 +11,15 @@ function Login(props) {
 
     return (
         <div className="col-md-3 text-end">
-            <a href="/" className="btn btn-primary" hidden={validToken}>Login/Sign-up</a>
-            <div>
-                <img src={userIcon} width={50} alt="user"/>
-                <b className="col-md-3 text-white">Olá {user.name}</b>
-            </div>
+            <If test={!user.name}>
+                <a href="/" className="btn btn-primary">Login/Sign-up</a>
+            </If>
+            <If test={user.name}>
+                <div>
+                    <img src={userIcon} width={50} alt="user"/>
+                    <b className="col-md-3 text-white">Olá {user.name}</b>
+                </div>
+            </If>
         </div>
     )
 }
