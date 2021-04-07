@@ -3,7 +3,7 @@ import { toastr } from 'react-redux-toastr'
 
 import consts from './TodoConsts'
 
-const BASE_URL = 'http://localhost:4040/api/urbisTodos'
+const BASE_URL = process.env.REACT_APP_HOST
 
 
 export const search = (description) => {

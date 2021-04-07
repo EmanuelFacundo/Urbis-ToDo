@@ -7,7 +7,8 @@ const bcrypt = require('bcrypt')
 
 /* Padrões para o e-mail e o password */
 const emailRegex = /\S+@\S+\.\S+/
-const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/
+// const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/
+const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})/
 
 // Tratamento de errors
 const sendErrorsFromDB = (res, dbErrors) => {
@@ -24,7 +25,7 @@ const login = (req, res, next) => {
         if (err) {
             return sendErrorsFromDB(res, err)
         } else if (user && bcrypt.compareSync(password, user.password)) {
-            const token = jwt.sign(user, process.env.AUTHSECRET, {
+            const token = jwt.sign({user}, process.env.AUTHSECRET, {
                 expiresIn: "1 day" 
             })
             const { name, email } = user
@@ -42,7 +43,7 @@ const validateToken = (req, res, next) => {
     })
 }
 
-const signup = (req, res, any) => {
+const signup = (req, res, next) => {
 
     const name = req.body.name || ''
     const email = req.body.email || ''
@@ -56,7 +57,7 @@ const signup = (req, res, any) => {
     if (!password.match(passwordRegex)) {
         return res.status(400).send({
             errors: [
-                "Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, uma caractere especial(@#$%) e tamanho entre 6-20."
+                "Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número e tamanho entre 6-20."
             ]
         })
     }

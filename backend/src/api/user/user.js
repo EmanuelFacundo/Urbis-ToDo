@@ -9,4 +9,4 @@ const userSchema = new Schema({
 
 })
 
-module.export = restful.model('User', userSchema)
+module.exports = restful.model('User', userSchema)
