@@ -3,7 +3,7 @@ import { toastr } from 'react-redux-toastr'
 
 import consts from './TodoConsts'
 
-const BASE_URL = process.env.REACT_APP_HOST
+const BASE_URL = process.env.REACT_APP_DATABASE_API
 
 
 export const search = (description) => {
@@ -12,9 +12,18 @@ export const search = (description) => {
         const search = description ? `&description__regex=/${description}/` : ''
         Axios.get(`${BASE_URL}?sort=-createdAt${search}`)
             .then(resp => dispatch({ type: consts.TODO_SEARCH, payload: resp.data }))
+            .catch(e => console.log(e))
 
     }
 
+}
+
+export function getList() {
+    return dispatch => {
+        Axios.get(BASE_URL)
+            .then(resp => dispatch({ type: consts.TODO_SEARCH, payload: resp.data }))
+            .catch(e => e.response.data.errors.forEach(error => toastr.error('Error', error)))
+    }
 }
 
 export function changeToDoDescription(event) {

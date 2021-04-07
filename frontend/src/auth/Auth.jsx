@@ -9,6 +9,8 @@ import { login, signup } from './AuthActions'
 
 import Grid from '../components/templates/Grid'
 import Input from './InputAuth'
+import Notfication from '../components/notification/Notification'
+import Welcome from '../welcome/Welcome'
 
 class Auth extends Component{
     constructor(props) {
@@ -68,6 +70,8 @@ class Auth extends Component{
                                 'Novo usuário? Registrar aqui!'} </b>
                         </button>
                 </div>
+                <Welcome />
+                <Notfication />
             </div>
         )
     }

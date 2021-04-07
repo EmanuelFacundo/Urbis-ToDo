@@ -8,16 +8,18 @@ import thunk from 'redux-thunk'
 
 
 import './index.css';
-import App from './main/App';
 import reportWebVitals from './reportWebVitals';
 import reducers from './main/reducers'
+import Routes from './main/Routes';
+import Menu from './components/menu/Menu';
 
 const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers)
 
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Menu />
+    <Routes/>
   </Provider>,
   document.getElementById('root')
 );

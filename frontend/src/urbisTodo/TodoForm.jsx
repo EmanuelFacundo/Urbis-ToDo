@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faSearchMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 
-import { changeToDoDescription, search, add, clear } from './TodoAction'
+import { changeToDoDescription, search, add, clear, getList } from './TodoAction'
 
 import Grid from '../components/templates/Grid'
 
@@ -18,7 +18,7 @@ class TodoForm extends Component {
     }
 
     componentDidMount() {
-        this.props.search()
+        this.props.getList()
     }
 
     keyHandler(event) {
@@ -65,7 +65,10 @@ class TodoForm extends Component {
     }
 }
 
-const mapStateToProps = state => ({ description: state.todo.description, list: state.todo.list })
-const mapDispatchToProps = dispatch => bindActionCreators({ changeToDoDescription, search, add, clear }, dispatch)
+const mapStateToProps = state => ({ 
+    description: state.todo.description, 
+    list: state.todo.list
+})
+const mapDispatchToProps = dispatch => bindActionCreators({ changeToDoDescription, search, add, clear, getList }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoForm)

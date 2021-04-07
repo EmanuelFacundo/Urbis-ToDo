@@ -5,13 +5,9 @@ const port = process.env.PORT || 3000
 
 const express = require('express')
 const cors = require('cors')
+const corsOptions = require('../config/cors')
 
 const server = express()
-
-var corsOptions = {
-    origin: process.env.ORIGIN
-}
-
 
 server.use(express.urlencoded({ extended: true }))
 server.use(express.json())

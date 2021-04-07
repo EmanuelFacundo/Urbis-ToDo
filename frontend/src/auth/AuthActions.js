@@ -11,6 +11,7 @@ function _submit(values, url) {
                 dispatch([
                     {type: USER_FETCHED, payload: resp.data} 
                 ])
+                toastr.success('Sucesso','')
             })
             .catch(e => {
                 e.response.data.errors.forEach( error => toastr.error('Error', error))
@@ -35,7 +36,7 @@ export function logout() {
 export function validateToken(token) {
     return dispatch => {
         if(token) {
-            Axios.post(`${process.env.REACT_APP_DATABASE_OAPI}/validateToken`, { token })
+            Axios.post(`${process.env.REACT_APP_DATABASE_OAPI}/validationToken`, { token })
                 .then(resp => {
                     dispatch({ type: TOKEN_VALIDATED, payload: resp.data.valid })
                 })
