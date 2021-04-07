@@ -11,10 +11,10 @@ function Login(props) {
 
     return (
         <div className="col-md-3 text-end">
-            <If test={!user.name}>
+            <If test={!validToken}>
                 <a href="/" className="btn btn-primary">Login/Sign-up</a>
             </If>
-            <If test={user.name}>
+            <If test={validToken}>
                 <div>
                     <img src={userIcon} width={50} alt="user"/>
                     <b className="col-md-3 text-white">Olá {user.name}</b>
