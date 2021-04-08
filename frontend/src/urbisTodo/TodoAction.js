@@ -11,7 +11,10 @@ export const search = (description) => {
         const description = getState().todo.description
         const search = description ? `&description__regex=/${description}/` : ''
         Axios.get(`${BASE_URL}?sort=-createdAt${search}`)
-            .then(resp => dispatch({ type: consts.TODO_SEARCH, payload: resp.data }))
+            .then(resp =>{
+                dispatch({ type: consts.TODO_SEARCH, payload: resp.data })
+                // toastr.info('Sistema inicializado com sucesso!')
+            }) 
             .catch(e => {
                 e.response.data.errors.forEach(error => toastr.error('Error', error))
             })
@@ -45,7 +48,7 @@ export function add(description) {
                 }
             )
             .catch(e => {
-                e.response.data.errors.forEach(error => toastr.error('Error', error))
+                e.response.data.errors.forEach(error => toastr.error('Necessario uma descrição', 'Adicione uma descrição e tente novamente!'))
             })
     }
 }
@@ -58,6 +61,9 @@ export function markAsDone(todo){
                 toastr.success('Sucesso', `Tarefa (${todo.description}) foi concluida.`)
                 }
             )
+            .catch(e => {
+                e.response.data.errors.forEach(error => toastr.error('Error', error))
+            })
     }
 }
 
@@ -69,6 +75,9 @@ export function markAsPeding(todo){
                 toastr.info('Sucesso', `Tarefa (${todo.description}) foi restaurada.`)
                 }
             )
+            .catch(e => {
+                e.response.data.errors.forEach(error => toastr.error('Error', error))
+            })
     }
 }
 
@@ -82,6 +91,9 @@ export function edit(todo, description){
                 dispatch(clear())
                 toastr.success('Sucesso', `Tarefa (${desA}) foi atualizada para (${description})`)
             })
+            .catch(e => {
+                toastr.error('Necessario uma descrição', 'Adicione uma descrição e clique novamente')
+            })
     }
 
 }
@@ -90,7 +102,7 @@ export function remove(todo){
     return dispatch => {
         Axios.delete(`${BASE_URL}/${todo._id}`)
             .then(resp => {
-                toastr.warning('Sucesso', `Tarefa (${todo.description}) excluida.`)
+                toastr.warning('Sucesso', `Tarefa (${todo.description}) foi excluida.`)
                 dispatch(search())      
                 } 
             )
