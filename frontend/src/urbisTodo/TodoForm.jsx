@@ -18,7 +18,7 @@ class TodoForm extends Component {
     }
 
     componentDidMount() {
-        this.props.getList()
+        this.props.search()
     }
 
     keyHandler(event) {

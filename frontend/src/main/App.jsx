@@ -6,7 +6,6 @@ import React from 'react'
 import Notification from '../components/notification/Notification'
 
 import Todo from '../urbisTodo/Todo'
-import Login from '../components/menu/Login'
 
 export default function App(props) {
     return (

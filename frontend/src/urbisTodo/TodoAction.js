@@ -12,7 +12,9 @@ export const search = (description) => {
         const search = description ? `&description__regex=/${description}/` : ''
         Axios.get(`${BASE_URL}?sort=-createdAt${search}`)
             .then(resp => dispatch({ type: consts.TODO_SEARCH, payload: resp.data }))
-            .catch(e => console.log(e))
+            .catch(e => {
+                e.response.data.errors.forEach(error => toastr.error('Error', error))
+            })
 
     }
 
