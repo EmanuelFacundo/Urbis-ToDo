@@ -11,7 +11,7 @@ function _submit(values, url) {
                 dispatch([
                     {type: USER_FETCHED, payload: resp.data} 
                 ])
-                toastr.success('Sucesso','')
+                toastr.success('Bem-vindo(a)', `${resp.data.name} :)`)
             })
             .catch(e => {
                 e.response.data.errors.forEach( error => toastr.error('Error', error))

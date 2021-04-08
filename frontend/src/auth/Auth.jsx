@@ -35,6 +35,7 @@ class Auth extends Component{
 
         return(
             <div className="wrapper fadeInDown">
+                <Welcome />
                 <div className="formContent col-form-label col-form-label-lg col-form-label-sm">
                     <div>
                         <img width={150} src="http://taylorehat.com/images/todo-cloud-hero.png"
@@ -70,7 +71,7 @@ class Auth extends Component{
                                 'Novo usuário? Registrar aqui!'} </b>
                         </button>
                 </div>
-                <Welcome />
+                
                 <Notfication />
             </div>
         )
