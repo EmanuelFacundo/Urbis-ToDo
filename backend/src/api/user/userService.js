@@ -10,7 +10,8 @@ const emailRegex = /\S+@\S+\.\S+/
 // const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/
 const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})/
 
-// Tratamento de errors
+
+
 const sendErrorsFromDB = (res, dbErrors) => {
     const errors = []
     _.forIn(dbErrors.errors, error => errors.push(error.message))

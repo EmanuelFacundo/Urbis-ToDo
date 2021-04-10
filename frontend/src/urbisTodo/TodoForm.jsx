@@ -17,25 +17,30 @@ class TodoForm extends Component {
         this.keyHandler = this.keyHandler.bind(this)
     }
 
-    componentDidMount() {
-        this.props.search()
-    }
+    // componentDidMount() {
+    //     this.props.getList(this.props.user)
+    // }
 
     keyHandler(event) {
 
-        const { add, search, description, clear } = this.props
+        const { user, description, clear, todo, getList } = this.props
 
         if(event.key === 'Enter') {
-            event.shiftKey ? add(description) : search()
+            event.shiftKey ? this.addDescription(description, todo) : getList(user)
         } else if(event.key === 'Escape') {
             clear() 
         }
 
     }
 
-    render() {
+    addDescription(description, todo){
+        todo.list.push({description: description})
 
-        const { add, search, description, clear } = this.props
+        this.props.add(todo)
+    }
+
+    render() {
+        const { getList, description, clear, todo, user } = this.props
 
         return (
             <div role='form' className=" todoForm nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 white">
@@ -48,7 +53,7 @@ class TodoForm extends Component {
                 </Grid>
                 <Grid cols='12 3 2'>
                     <button className="btn btn-primary"
-                        onClick={search}>
+                        onClick={getList(user)}>
                         <FontAwesomeIcon icon={faSearch} />
                     </button>
                     <button className="btn btn-outline-danger"
@@ -56,7 +61,7 @@ class TodoForm extends Component {
                         <FontAwesomeIcon icon={faSearchMinus} />
                     </button>
                     <button className="btn btn-success"
-                        onClick={() => add(description)}>
+                        onClick={() => this.addDescription(description, todo)}>
                         <FontAwesomeIcon icon={faPlus} />
                     </button>
                 </Grid>
@@ -67,7 +72,8 @@ class TodoForm extends Component {
 
 const mapStateToProps = state => ({ 
     description: state.todo.description, 
-    list: state.todo.list
+    todo: state.todo.user,
+    user: state.auth.user
 })
 const mapDispatchToProps = dispatch => bindActionCreators({ changeToDoDescription, search, add, clear, getList }, dispatch)
 

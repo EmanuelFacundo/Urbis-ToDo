@@ -7,4 +7,4 @@ const todoUrbis = new Schema({
     createdAt: { type: Date, default: Date.now}    
 })
 
-module.exports = restful.model('Todo', todoUrbis)
+module.exports =  todoUrbis

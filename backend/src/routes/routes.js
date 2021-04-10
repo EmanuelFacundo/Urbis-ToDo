@@ -18,10 +18,11 @@ module.exports = function (server) {
     const protectedApi = express.Router()
     server.use('/api', protectedApi) //midway
 
-    protectedApi.use(auth)
+    // protectedApi.use(auth)
 
-    const urbisTodoService = require('../api/urbisTodo/urbisTodoService')
-    urbisTodoService.register(protectedApi, '/urbisTodos')
+    const {urbisTodo, searchDescription} = require('../api/urbisTodo/urbisTodoService')
+    urbisTodo.register(protectedApi, '/urbisTodos')
+    protectedApi.use('/urbisTodos/search', searchDescription)
 
     /*
     * Rotas Abertas
@@ -29,7 +30,7 @@ module.exports = function (server) {
     const openApi = express.Router()
     server.use('/oapi', openApi)
 
-    const AuthService = require('../api/user/authService')
+    const AuthService = require('../api/user/userService')
     openApi.use('/login', AuthService.login)
     openApi.use('/signup', AuthService.signup)
     openApi.use('/validationToken', AuthService.validateToken)

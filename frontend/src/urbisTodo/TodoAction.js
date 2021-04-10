@@ -23,10 +23,15 @@ export const search = (description) => {
 
 }
 
-export function getList() {
+export function getList(value) {
     return dispatch => {
         Axios.get(BASE_URL)
-            .then(resp => dispatch({ type: consts.TODO_SEARCH, payload: resp.data }))
+            .then(resp =>{
+                 dispatch({
+                    type: consts.TODO_SEARCH, 
+                    payload: resp.data.find(user => user.email === value.email) 
+                })
+            })
             .catch(e => e.response.data.errors.forEach(error => toastr.error('Error', error)))
     }
 }
@@ -38,27 +43,29 @@ export function changeToDoDescription(event) {
     }
 }
 
-export function add(description) {
+export function add(values) {
     return dispatch => {
-        Axios.post(BASE_URL, { description })
+        Axios.put(`${BASE_URL}/${values._id}`, values)
             .then(resp =>{
                 dispatch(clear())
-                dispatch(search())
+                dispatch(getList(values))
                 toastr.success('Sucesso', 'Tarefa Adicionada com sucesso!')
                 }
             )
             .catch(e => {
-                e.response.data.errors.forEach(error => toastr.error('Necessario uma descrição', 'Adicione uma descrição e tente novamente!'))
+                toastr.error('Necessario uma descrição', 'Adicione uma descrição e tente novamente!')
             })
     }
 }
 
-export function markAsDone(todo){
+export function markAsDone(todo, index){
+    
     return dispatch => {
-        Axios.put(`${BASE_URL}/${todo._id}`, { ...todo, done: true })
+        todo.list[index] = {...todo.list[index], done: true}
+        Axios.put(`${BASE_URL}/${todo._id}`, todo)
             .then(resp => {
-                dispatch(search())
-                toastr.success('Sucesso', `Tarefa (${todo.description}) foi concluida.`)
+                dispatch(getList(todo))
+                toastr.success('Sucesso', `Tarefa (${todo.list[index].description}) foi concluida.`)
                 }
             )
             .catch(e => {
@@ -67,12 +74,14 @@ export function markAsDone(todo){
     }
 }
 
-export function markAsPeding(todo){
+export function markAsPeding(todo, index){
+    todo.list[index] = {...todo.list[index], done: false}
+    
     return dispatch => {
-        Axios.put(`${BASE_URL}/${todo._id}`, { ...todo, done: false })
+        Axios.put(`${BASE_URL}/${todo._id}`, todo)
             .then(resp => {
-                dispatch(search())
-                toastr.info('Sucesso', `Tarefa (${todo.description}) foi restaurada.`)
+                dispatch(getList(todo))
+                toastr.info('Sucesso', `Tarefa (${todo.list[index].description}) foi restaurada.`)
                 }
             )
             .catch(e => {
@@ -81,15 +90,16 @@ export function markAsPeding(todo){
     }
 }
 
-export function edit(todo, description){
-    const desA = todo.description
+export function edit(todo, index, description){
+    const des = todo.list[index].description
+    todo.list[index] = {...todo.list[index], description: description}
 
     return dispatch => {
-        Axios.put(`${BASE_URL}/${todo._id}`, { ...todo, description: description})
+        Axios.put(`${BASE_URL}/${todo._id}`, todo)
             .then(resp => {
-                dispatch(search())
+                dispatch(getList(todo))
                 dispatch(clear())
-                toastr.success('Sucesso', `Tarefa (${desA}) foi atualizada para (${description})`)
+                toastr.success('Sucesso', `Tarefa (${des}) foi atualizada para (${description})`)
             })
             .catch(e => {
                 toastr.error('Necessario uma descrição', 'Adicione uma descrição e clique novamente')
@@ -98,12 +108,14 @@ export function edit(todo, description){
 
 }
 
-export function remove(todo){
+export function remove(todo, index){
     return dispatch => {
-        Axios.delete(`${BASE_URL}/${todo._id}`)
+        const des = todo.list[index].description
+        todo.list.splice(index, 1)
+        Axios.put(`${BASE_URL}/${todo._id}`, todo)
             .then(resp => {
-                toastr.warning('Sucesso', `Tarefa (${todo.description}) foi excluida.`)
-                dispatch(search())      
+                toastr.warning('Sucesso', `Tarefa (${des}) foi excluida.`)
+                dispatch(getList(todo))      
                 } 
             )
         }
@@ -112,6 +124,6 @@ export function remove(todo){
 export function clear() {
     return [
         { type: consts.TODO_CLEAR },
-        search()
+        // getList()
     ]
 }

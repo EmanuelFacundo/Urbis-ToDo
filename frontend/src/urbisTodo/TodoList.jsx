@@ -1,20 +1,24 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faPencilAlt, faTrashAlt, faUndoAlt } from '@fortawesome/free-solid-svg-icons'
 
-import { markAsDone, markAsPeding, remove, edit } from './TodoAction'
+import { markAsDone, markAsPeding, remove, edit, getList } from './TodoAction'
 
-function TodoList(props) {
+class TodoList extends Component {
 
-    const renderRows = () => {
-        const list = props.list || []
+    componentDidMount() {
+        this.props.getList(this.props.user)
+    }
 
-        const { markAsDone, markAsPeding, remove, edit } = props
+    renderRows(){
+        const list = this.props.userTodo.list || []
 
-        return list.map(todo => (
+        const { markAsDone, markAsPeding, remove, edit, userTodo } = this.props
+
+        return list.map((todo, index) => (
             <tr key={todo._id} className={ todo.done ? 'markAsDone':''}>
                 <th className="maxW">
                     {todo.description}
@@ -25,51 +29,65 @@ function TodoList(props) {
                 <th>
                     <button className="btn btn-success" 
                         hidden={todo.done}
-                        onClick={() => markAsDone(todo)}>
+                        onClick={() => markAsDone(userTodo, index)}>
                         <FontAwesomeIcon icon={faCheck} />
                     </button>
                     <button className="btn btn-warning" 
                         hidden={todo.done}
-                        onClick={() => edit(todo, props.description)}>
+                        onClick={() => edit(userTodo, index, this.props.description)}>
                         <FontAwesomeIcon icon={faPencilAlt} />
                     </button>
                     <button className="btn btn-danger" 
                         hidden={!todo.done}
-                        onClick={() => remove(todo)}>
+                        onClick={() => remove(userTodo, index)}>
                         <FontAwesomeIcon icon={faTrashAlt} />
                     </button>
                     <button className="btn btn-warning" 
                         hidden={!todo.done}
-                        onClick={() => markAsPeding(todo)}>
+                        onClick={() => markAsPeding(userTodo, index)}>
                         <FontAwesomeIcon icon={faUndoAlt} />
                     </button>
                 </th>
             </tr>
         ))
     }
+    
+    render(){
+        try {
+            return (
+                <div className="table-responsive">
+                    <table className="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Data</th>
+                                <th className="tableActions">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderRows()}
+                        </tbody>
+        
+                    </table>
+                </div>
+            )
+        } catch (error) {
+            this.componentDidMount()
+            return false
+        }
+        
+    }  
+        
 
-    return (
-        <div className="table-responsive">
-            <table className="table table-striped table-sm">
-                <thead>
-                    <tr>
-                        <th>Descrição</th>
-                        <th>Data</th>
-                        <th className="tableActions">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {renderRows()}
-                </tbody>
-
-            </table>
-        </div>
-    )
 }
 
 
-const mapStateToProps = state => ({ list: state.todo.list, description: state.todo.description })
-const mapDispatchToProps = dispatch => bindActionCreators({ markAsDone, markAsPeding, remove, edit }, dispatch)
+const mapStateToProps = state => ({
+    userTodo: state.todo.user, 
+    description: state.todo.description,
+    user: state.auth.user
+})
+const mapDispatchToProps = dispatch => bindActionCreators({ markAsDone, markAsPeding, remove, edit, getList }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
 
