@@ -72,7 +72,6 @@ class TodoList extends Component {
                 </div>
             )
         } catch (error) {
-            this.componentDidMount()
             return false
         }
         

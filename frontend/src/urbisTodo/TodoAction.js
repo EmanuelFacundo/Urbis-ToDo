@@ -5,30 +5,12 @@ import consts from './TodoConsts'
 
 const BASE_URL = process.env.REACT_APP_DATABASE_API
 
-
-export const search = (description) => {
-    return (dispatch, getState) => {
-        const description = getState().todo.description
-        const search = description ? `&description__regex=/${description}/` : ''
-        Axios.get(`${BASE_URL}?sort=-createdAt${search}`)
-            .then(resp =>{
-                dispatch({ type: consts.TODO_SEARCH, payload: resp.data })
-                // toastr.info('Sistema inicializado com sucesso!')
-            }) 
-            .catch(e => {
-                e.response.data.errors.forEach(error => toastr.error('Error', error))
-            })
-
-    }
-
-}
-
 export function getList(value) {
     return dispatch => {
         Axios.get(BASE_URL)
             .then(resp =>{
                  dispatch({
-                    type: consts.TODO_SEARCH, 
+                    type: consts.TODO_GETLIST, 
                     payload: resp.data.find(user => user.email === value.email) 
                 })
             })
@@ -123,7 +105,6 @@ export function remove(todo, index){
 
 export function clear() {
     return [
-        { type: consts.TODO_CLEAR },
-        // getList()
+        { type: consts.TODO_CLEAR }
     ]
 }

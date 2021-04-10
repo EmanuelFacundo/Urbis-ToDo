@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faSearchMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
 
-import { changeToDoDescription, search, add, clear, getList } from './TodoAction'
+import { changeToDoDescription, add, clear } from './TodoAction'
 
 import Grid from '../components/templates/Grid'
 
@@ -16,10 +16,6 @@ class TodoForm extends Component {
 
         this.keyHandler = this.keyHandler.bind(this)
     }
-
-    // componentDidMount() {
-    //     this.props.getList(this.props.user)
-    // }
 
     keyHandler(event) {
 
@@ -40,7 +36,7 @@ class TodoForm extends Component {
     }
 
     render() {
-        const { getList, description, clear, todo, user } = this.props
+        const { description, clear, todo } = this.props
 
         return (
             <div role='form' className=" todoForm nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 white">
@@ -48,21 +44,17 @@ class TodoForm extends Component {
                     <input type="text" id='description' className="form-control"
                         placeholder="Adicione uma tarefa."
                         onChange={this.props.changeToDoDescription}
-                        value={this.props.description}
+                        value={description}
                         onKeyUp={this.keyHandler} />
                 </Grid>
                 <Grid cols='12 3 2'>
-                    <button className="btn btn-primary"
-                        onClick={getList(user)}>
-                        <FontAwesomeIcon icon={faSearch} />
+                    <button className="btn btn-success mButton"
+                        onClick={() => this.addDescription(description, todo)}>
+                        <FontAwesomeIcon icon={faPlus} />
                     </button>
                     <button className="btn btn-outline-danger"
                         onClick={clear}>
-                        <FontAwesomeIcon icon={faSearchMinus} />
-                    </button>
-                    <button className="btn btn-success"
-                        onClick={() => this.addDescription(description, todo)}>
-                        <FontAwesomeIcon icon={faPlus} />
+                        <FontAwesomeIcon icon={faTimes} />
                     </button>
                 </Grid>
             </div>
@@ -72,9 +64,8 @@ class TodoForm extends Component {
 
 const mapStateToProps = state => ({ 
     description: state.todo.description, 
-    todo: state.todo.user,
-    user: state.auth.user
+    todo: state.todo.user
 })
-const mapDispatchToProps = dispatch => bindActionCreators({ changeToDoDescription, search, add, clear, getList }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ changeToDoDescription, add, clear }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoForm)
