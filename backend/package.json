@@ -5,7 +5,10 @@
   "main": "./src/loader.js",
   "scripts": {
     "dev": "nodemon",
-    "start": "node loader.js"
+    "start": "node src/loader.js"
+  },
+  "engines": {
+    "node": "15"
   },
   "keywords": [],
   "author": "",
