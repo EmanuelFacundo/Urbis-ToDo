@@ -7,14 +7,16 @@ const BASE_URL = process.env.REACT_APP_DATABASE_API
 
 export function getList(value) {
     return dispatch => {
-        Axios.get(BASE_URL)
+        Axios.get(`${BASE_URL}/${value._id}`)
             .then(resp =>{
                  dispatch({
                     type: consts.TODO_GETLIST, 
-                    payload: resp.data.find(user => user.email === value.email) 
+                    payload: resp.data
                 })
             })
-            .catch(e => e.response.data.errors.forEach(error => toastr.error('Error', error)))
+            .catch(e =>{
+                e.response.data.errors.forEach(error => toastr.error('Error', error))
+            })
     }
 }
 

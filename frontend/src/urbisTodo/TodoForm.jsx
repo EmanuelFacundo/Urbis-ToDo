@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
 
-import { changeToDoDescription, add, clear } from './TodoAction'
+import { changeToDoDescription, add, clear, getList } from './TodoAction'
 
 import Grid from '../components/templates/Grid'
 
@@ -19,10 +19,10 @@ class TodoForm extends Component {
 
     keyHandler(event) {
 
-        const { user, description, clear, todo, getList } = this.props
+        const { description, clear, todo, getList } = this.props
 
         if(event.key === 'Enter') {
-            event.shiftKey ? this.addDescription(description, todo) : getList(user)
+            event.shiftKey ? this.addDescription(description, todo) : getList(todo)
         } else if(event.key === 'Escape') {
             clear() 
         }
@@ -66,6 +66,6 @@ const mapStateToProps = state => ({
     description: state.todo.description, 
     todo: state.todo.user
 })
-const mapDispatchToProps = dispatch => bindActionCreators({ changeToDoDescription, add, clear }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ changeToDoDescription, add, clear, getList }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoForm)

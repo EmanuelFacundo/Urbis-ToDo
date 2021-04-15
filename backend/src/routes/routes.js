@@ -18,11 +18,10 @@ module.exports = function (server) {
     const protectedApi = express.Router()
     server.use('/api', protectedApi) //midway
 
-    // protectedApi.use(auth)
+    protectedApi.use(auth)
 
-    const {urbisTodo, searchDescription} = require('../api/urbisTodo/urbisTodoService')
+    const urbisTodo = require('../api/urbisTodo/urbisTodoService')
     urbisTodo.register(protectedApi, '/urbisTodos')
-    protectedApi.use('/urbisTodos/search', searchDescription)
 
     /*
     * Rotas Abertas
